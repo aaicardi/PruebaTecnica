@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>69f1594e-c6f6-4904-94c1-6a9a31962870</UserSecretsId>
+    <StartupObject>XianaCore.Backend.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XianaCore.Application\XianaCore.Application.csproj" />
+    <ProjectReference Include="..\XianaCore.Domian\XianaCore.Domian.csproj" />
+    <ProjectReference Include="..\XianaCore.Infrastructure\XianaCore.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>
