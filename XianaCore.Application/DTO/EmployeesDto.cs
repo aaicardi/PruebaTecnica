@@ -9,7 +9,7 @@ namespace XianaCore.Application.DTO
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string RoleDescription { get; set; }
-        public long hourlySalary { get; set; }
+        public long HourlySalary { get; set; }
         public long MonthlySalary { get; set; }
     }
 }

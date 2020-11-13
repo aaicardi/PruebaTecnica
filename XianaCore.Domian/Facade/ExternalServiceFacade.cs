@@ -112,7 +112,7 @@ namespace XianaCore.Domian.Facade
         /// <returns>Task&lt;T&gt;.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <remarks>Jhoel Aicardi</remarks>
-        public async Task<T> GetRestServiceAsync<T>(string url, string method, IDictionary<string, string> parameters, IDictionary<string, string> headers, string token)
+        public async Task<string> GetRestServiceAsync<T>(string url, string method, IDictionary<string, string> parameters, IDictionary<string, string> headers, string token)
         {
             var baseUrl = $"{url}/{method}";
             if (parameters.Count > 0)
@@ -136,17 +136,10 @@ namespace XianaCore.Domian.Facade
             if (res.IsSuccessStatusCode)
             {
                 var data = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<T>(data);
+                return data;
             }
+            return null;
 
-            var responseError = new ServiceResponse<string>()
-            {
-                HttpStatusCode = res.StatusCode,
-                Status = false,
-                Message = res.ReasonPhrase,
-                Data = await res.Content.ReadAsStringAsync()
-            };
-            throw new ArgumentNullException(JsonConvert.SerializeObject(responseError));
         }
 
 

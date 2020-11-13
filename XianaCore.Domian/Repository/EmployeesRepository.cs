@@ -2,6 +2,9 @@
 
 namespace XianaCore.Domian.Repository
 {
+    using Newtonsoft.Json;
+
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -19,24 +22,19 @@ namespace XianaCore.Domian.Repository
 
         public async Task<IEnumerable<Employees>> GetEmployees()
         {
-
-            try
+            var objHeaders = new Dictionary<string, string>
             {
-                var objHeaders = new Dictionary<string, string>
-            {
-                { string.Empty, string.Empty }
+                { "Accept", "application/json" }
             };
-
-                var result = await _externalServiceFacade
-                    .GetRestServiceAsync<ServiceResponse<List<Employees>>>(string.Empty,
-                        string.Empty, new Dictionary<string, string>(), objHeaders, string.Empty);
-            }
-            catch
+            var result = await _externalServiceFacade
+                .GetRestServiceAsync<string>("http://masglobaltestapi.azurewebsites.net",
+                    "api/Employees", new Dictionary<string, string>(), objHeaders, string.Empty);
+            if (string.IsNullOrEmpty(result))
             {
-                // ignored
+                return new List<Employees>();
             }
-
-            return new List<Employees>();
+            var serializer = JsonConvert.DeserializeObject<IEnumerable<Employees>>(result);
+            return serializer;
         }
     }
 }
