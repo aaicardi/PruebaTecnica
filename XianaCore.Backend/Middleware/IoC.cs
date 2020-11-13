@@ -16,6 +16,7 @@ namespace XianaCore.Backend.Middleware
     using Microsoft.Extensions.DependencyInjection;
     using XianaCore.Application.Abstract;
     using XianaCore.Application.Implements;
+    using XianaCore.Domian.Facade;
     using XianaCore.Domian.IRepository;
     using XianaCore.Domian.Repository;
     using XianaCore.Infrastructure.Classes;
@@ -50,6 +51,7 @@ namespace XianaCore.Backend.Middleware
             //Repository
             #region Repository
             services.AddTransient<IEmployeesRepository, EmployeesRepository>();
+            services.AddTransient<IExternalServiceFacade, ExternalServiceFacade>();            
             #endregion
 
             return services;
