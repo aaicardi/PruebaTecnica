@@ -44,7 +44,8 @@ namespace XianaCore.Backend.Middleware
 
             //Services
             #region Services
-            services.AddTransient<IEmployeesService, EmployeesService>();          
+            services.AddTransient<IEmployeesService, EmployeesService>();
+            services.AddTransient<ICalculatedAnnualSalaryService, CalculatedAnnualSalaryService>();            
             #endregion
 
 
