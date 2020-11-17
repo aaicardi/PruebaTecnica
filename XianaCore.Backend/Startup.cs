@@ -29,6 +29,19 @@ namespace XianaCore.Backend
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            var urlOrigins = Configuration.GetValue<string>("UrlOrigins").Split(';');
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("SiteCorsPolicy",
+                    builder =>
+                        builder.WithOrigins(urlOrigins).SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials()
+                            .WithHeaders("authorization", "accept", "content-type", "origin"));
+            });
             #endregion
 
             string connection = Configuration.GetConnectionString("CSXianaCore");
@@ -55,7 +68,12 @@ namespace XianaCore.Backend
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("SiteCorsPolicy");
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                await next();
+            });
             app.UseRouting();
 
             app.UseAuthorization();
